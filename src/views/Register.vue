@@ -1,4 +1,4 @@
-<template>
+  <template>
     <v-container class="monday">
         <v-layout
       text-xs-center
@@ -76,8 +76,7 @@ export default {
                       localStorage.setItem('token',accessToken);
                       
                       //setting the user tokens to axios header
-                       var token = localStorage.getItem('token');
-                      console.log(token)
+                      window.token = localStorage.getItem('token');
                       axios.defaults.headers.common['Authorization']= "Bearer "+token;
                       axios.defaults.headers.post['Content-Type'] = 'application/json';
                       //get request to get user details
@@ -86,13 +85,15 @@ export default {
                         console.log(response.data);
                         //setting the user details to local storage
                         localStorage.setItem('user',response.data.name);
-
+                        localStorage.setItem('userid',response.data.id);
                         window.isSignedIn= true;
                       }).catch((error)=>{
                         console.log(error);
                       })
-                  })
+                  });
                   
+                }else{
+                  console.log("There is some error . Please contact the administrator");
                 }
             }).catch((error)=>{
               console.log(error)
