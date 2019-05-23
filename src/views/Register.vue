@@ -87,6 +87,7 @@ export default {
                         localStorage.setItem('user',response.data.name);
                         localStorage.setItem('userid',response.data.id);
                         window.isSignedIn= true;
+                        this.$router.push('/main');
                       }).catch((error)=>{
                         console.log(error);
                       })

@@ -19,7 +19,7 @@
           
 
           <v-list-tile-content class="atlas">
-            <v-list-tile-title>Welcome Biswas Sampad !!</v-list-tile-title>
+            <v-list-tile-title>Welcome {{this.user}} !!</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -36,6 +36,17 @@
             <v-list-tile-title>{{item.name}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+      
+        <v-list-tile class="sabrina" @click="logout()">
+          <v-list-tile-action>
+            <v-icon>power_settings_new</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      
       </v-list>
       <v-layout app row wrap class="gudby">
       <p>	&copy;  Chancellor Grand - 2019</p>
@@ -58,12 +69,24 @@ export default {
               {name:"Booking History",icon:"history",url:""},
               {name:"Support",icon:"call",url:""},
               {name:"Settings",icon:"settings",url:""},
-              {name:"Logout",icon:"power_settings_new",url:""},
               {name:"Privacy Policy",icon:"pageview",url:"/privacypolicy"},
               {name:"Terms & Conditions",icon:"indeterminate_check_box",url:"/tnc"}
-            ]
+            ],
+            user:'',
+            userid:'',
         }
-    }
+    },
+   mounted(){
+          this.user = localStorage.user;
+   },
+   methods:{
+      logout(){
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userid');
+        this.$router.push('/')
+      }
+   }
 }
 </script>
 

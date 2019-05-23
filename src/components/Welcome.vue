@@ -19,8 +19,8 @@
 
       </v-flex>
     <v-flex class="monday-buttons">
-        <v-btn block  class="monday-button-login" >Login</v-btn>
-        <v-btn block  class="monday-button-signup">Sign Up</v-btn>
+        <v-btn block  class="monday-button-login" href="login" >Login</v-btn>
+        <v-btn block  class="monday-button-signup" href="register">Sign Up</v-btn>
     </v-flex>
     </v-layout>
     </v-container>

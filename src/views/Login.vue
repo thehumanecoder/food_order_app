@@ -29,7 +29,7 @@
             required
             v-model = "password"
           ></v-text-field>
-          <v-btn block color="secondary" dark @click="loginUser()">Block Button</v-btn>
+          <v-btn block color="secondary" dark @click="loginUser()">Login</v-btn>
     </v-flex>
     </v-layout>
     </v-container>
@@ -77,6 +77,7 @@ export default {
                         localStorage.setItem('user',response.data.name);
                         localStorage.setItem('userid',response.data.id);
                         window.isSignedIn= true;
+                        this.$router.push('/main');
                       }).catch((error)=>{
                         console.log(error);
                       })
