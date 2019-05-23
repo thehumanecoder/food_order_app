@@ -12,23 +12,27 @@
       <v-flex xs12 class="tuesday-rock">
        <v-text-field
             label="Name"
+            v-model = "name"
             required
           ></v-text-field>
        <v-text-field
             label="Email Id"
+            v-model ="email"
             required
           ></v-text-field>
           <v-text-field
             type="password"
+            v-model = "password"
             label="Password"
             required
           ></v-text-field>
           <v-text-field
             type="password"
+            v-model="confpassword"
             label="Confirm Password"
             required
           ></v-text-field>
-          <v-btn block color="secondary" dark class="btn-signup">Block Button</v-btn>
+          <v-btn block color="secondary" dark class="btn-signup" @click="registerUser">Register</v-btn>
     </v-flex>
     </v-layout>
     </v-container>
@@ -36,7 +40,71 @@
 
 <script>
 export default {
+  data(){
+    return {
+      name:'',
+      email:'',
+      password:'',
+      confpassword:'',
+       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+    }
+  },
+  methods:{
+      registerUser(){
+        //checking if email is valid or not 
+        if(this.reg.test(this.email)){
+          //match the both passwords
+          if (this.password == this.confpassword){
+            //post request to register the user
+            axios.post('/api/cregister',{
+                name:this.name,
+                email:this.email,
+                password:this.password
+            }).then((response)=>{
+              //post request to recieve the token 
+                if(response.data==200){
+                  axios.post('/oauth/token',{
+                      grant_type:'password',
+                      client_id:2,
+                      client_secret:'GcBsChOS31qq6x7LWhEnCPtS7BMEDm5Z5Zp2xZLW',
+                      username:this.email,
+                      password:this.password
+                  }).then((response)=>{
+                      console.log(response);
+                      //setting the toke to localstorage
+                      let accessToken = response.data.access_token;
+                      localStorage.setItem('token',accessToken);
+                      
+                      //setting the user tokens to axios header
+                       var token = localStorage.getItem('token');
+                      console.log(token)
+                      axios.defaults.headers.common['Authorization']= "Bearer "+token;
+                      axios.defaults.headers.post['Content-Type'] = 'application/json';
+                      //get request to get user details
+                      axios.get('/api/user',{})
+                      .then((response)=>{
+                        console.log(response.data);
+                        //setting the user details to local storage
+                        localStorage.setItem('user',response.data.name);
 
+                        window.isSignedIn= true;
+                      }).catch((error)=>{
+                        console.log(error);
+                      })
+                  })
+                  
+                }
+            }).catch((error)=>{
+              console.log(error)
+            });
+         }else{
+           alert('Password do not match');
+        }
+        }else{
+          alert('Enter a valid email');
+        }
+       }
+  }
 }
 </script>
 
