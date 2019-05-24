@@ -19,7 +19,7 @@
           
 
           <v-list-tile-content class="atlas">
-            <v-list-tile-title>Welcome {{this.user}} !!</v-list-tile-title>
+            <v-list-tile-title>Welcome {{this.user | capitalize }} !!</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -27,12 +27,15 @@
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
 
-        <v-list-tile v-for="item in menus" :key="item.id" class="sabrina">
+        <v-list-tile v-for="item in menus" :key="item.id" class="sabrina" :href="item.url">
+      
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
 
-          <v-list-tile-content>
+          <v-list-tile-content
+          
+          >
             <v-list-tile-title>{{item.name}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -62,6 +65,7 @@ export default {
         return{
             drawer:false,
             menus:[
+              {name:"Home",icon:"home",url:"/main"},
               {name:"Book A Table" ,icon:"book",url:"/bookatable"},
               {name:"Order Food",icon:"fastfood",url:"/addorder"},
               {name:"Menu",icon:"dashboard",url:"/menu"},
@@ -86,7 +90,14 @@ export default {
         localStorage.removeItem('userid');
         this.$router.push('/')
       }
-   }
+   },
+   filters: {
+    capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+  }
+}
 }
 </script>
 

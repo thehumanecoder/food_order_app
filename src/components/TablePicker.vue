@@ -1,6 +1,7 @@
 <template>
 <v-container fluid>
-        <v-layout row wrap>
+  
+      
             <!-- First half begins-->
             <v-flex xs6>
               <v-layout  row wrap class="chairs">
@@ -56,7 +57,12 @@
 </template>
 <script>
 export default{
-
+    data(){
+        return {
+             table:false,
+             strength:'',
+        }
+    }
 }
 </script>
 <style>

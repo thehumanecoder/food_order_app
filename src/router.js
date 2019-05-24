@@ -7,6 +7,8 @@ import main from './views/Main.vue'
 import bookatable from './views/Bookatable.vue'
 import addorder from './views/Addorder.vue'
 import orderplus from './views/Orderplus.vue'
+import menu from './views/Menu.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -47,6 +49,11 @@ export default new Router({
       path:'/orderplus',
       name:'orderplus',
       component:orderplus
+    },
+    {
+      path:'/menu',
+      name:'menu',
+      component:menu
     }
   ]
 });
