@@ -15,12 +15,12 @@
       </v-flex>
       <v-flex xs12>
         <h3 class="display-1  mb-3">
-          Login 
+          Stewart Login 
         </h3>
       </v-flex>
     <v-flex class="tuesday-form" xs12>
         <v-text-field
-            label="Email Id"
+            label="User Id"
             required
             v-model="email"
           ></v-text-field>
@@ -31,13 +31,11 @@
             v-model = "password"
           ></v-text-field>
           <v-btn block color="secondary" dark @click="loginUser()">Login</v-btn>
+          <p>Wrong place ,if customer <a href="/login">Login</a> here</p>
     </v-flex>
     </v-layout>
     </v-container>
-    <v-footer class="pa-3" absolute href="/slogin">
-    <v-spacer></v-spacer>
-    <div>Stewart</div>
-  </v-footer>
+    
   </div>
 </template>
 
@@ -47,14 +45,13 @@ export default {
     return{
       email:'',
       password:'',
-      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+     host:'@xyz.com'
     }
   },
   methods:{
     loginUser(){
-        if(this.reg.test(this.email)){
-            axios.post('/api/clogin',{
-              email:this.email,
+            axios.post('/api/slogin',{
+              email:this.email + this.host,
               password:this.password
             }).then((response)=>{
               console.log(response);
@@ -63,7 +60,7 @@ export default {
                       grant_type:'password',
                       client_id:2,
                       client_secret:'GcBsChOS31qq6x7LWhEnCPtS7BMEDm5Z5Zp2xZLW',
-                      username:this.email,
+                      username:this.email + this.host,
                       password:this.password
                   }).then((response)=>{
                       console.log(response);
@@ -91,12 +88,9 @@ export default {
                   })
               }
             })
-        }else{
-          alert('Enter a valid email');
         }
     }
   }
-}
 </script>
 
 <style>

@@ -24,10 +24,37 @@
         </v-list-tile>
       </v-list>
 
-      <v-list class="pt-0" dense>
+      <v-list class="pt-0" dense v-if="this.role == 3">
         <v-divider></v-divider>
 
-        <v-list-tile v-for="item in menus" :key="item.id" class="sabrina" :href="item.url">
+        <v-list-tile v-for="item in cmenus" :key="item.id" class="sabrina" :href="item.url">
+      
+          <v-list-tile-action>
+            <v-icon>{{item.icon}}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content
+          
+          >
+            <v-list-tile-title>{{item.name}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      
+        <v-list-tile class="sabrina" @click="logout()">
+          <v-list-tile-action>
+            <v-icon>power_settings_new</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      
+      </v-list>
+      <v-list class="pt-0" dense v-if="this.role == 4">
+        <v-divider></v-divider>
+
+        <v-list-tile v-for="item in smenu" :key="item.id" class="sabrina" :href="item.url">
       
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
@@ -64,7 +91,7 @@ export default {
     data(){
         return{
             drawer:false,
-            menus:[
+            cmenus:[
               {name:"Home",icon:"home",url:"/main"},
               {name:"Book A Table" ,icon:"book",url:"/bookatable"},
               {name:"Order Food",icon:"fastfood",url:"/addorder"},
@@ -76,12 +103,22 @@ export default {
               {name:"Privacy Policy",icon:"pageview",url:"/privacypolicy"},
               {name:"Terms & Conditions",icon:"indeterminate_check_box",url:"/tnc"}
             ],
+            smenu:[
+              {name:"Home",icon:"home",url:"/main"},
+              {name:"Confirm Customer" ,icon:"book",url:"/confirmcostumer"},
+              {name:"Order Food",icon:"fastfood",url:"/addorder"},
+              {name:"Settings",icon:"settings",url:"/settings"},
+              {name:"Privacy Policy",icon:"pageview",url:"/privacypolicy"},
+              {name:"Terms & Conditions",icon:"indeterminate_check_box",url:"/tnc"}
+            ],
             user:'',
             userid:'',
+            role:''
         }
     },
    mounted(){
           this.user = localStorage.user;
+          this.role = localStorage.role;
    },
    methods:{
       logout(){

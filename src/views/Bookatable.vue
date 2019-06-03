@@ -145,6 +145,7 @@ Your Table No {{this.table}}<br>
 </v-flex>
 <v-flex xs12 v-if="response==true">
    <v-btn block color="#ffa000"  @click="bookTable()">Booking Confirmed</v-btn>
+   <v-btn block color="yellow"  href="/main">Return Home</v-btn>
 </v-flex>
 </v-container>
 </div>

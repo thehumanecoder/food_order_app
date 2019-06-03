@@ -15,8 +15,31 @@
   </v-carousel>
      </v-flex>
    </v-layout>
-   
-  <v-layout class="options">
+   <v-layout>
+     <div v-if="this.role == 4">
+      <v-layout class="options">
+    <v-flex xs4 class="option-main">
+      <v-flex xs12>
+       <v-icon class="om-icon" color="#3949ab">book</v-icon>
+       </v-flex>
+      <span class="menu-itexts">Confirm Customer</span>
+    </v-flex>
+    <v-flex xs4 class="option-main">
+       <v-flex xs12>
+       <v-icon class="om-icon" color="#2e7d32">fastfood</v-icon>
+       </v-flex>
+      <span class="menu-itexts">Order Food</span>
+    </v-flex>
+    <v-flex xs4 class="option-main">
+       <v-flex xs12>
+       <v-icon class="om-icon" color="#ff1744">receipt</v-icon>
+       </v-flex>
+      <span class="menu-itexts">Print Bill</span>
+          </v-flex>
+  </v-layout>
+     </div>
+     <div v-if="this.role == 3">
+    <v-layout class="options">
     <v-flex xs4 class="option-main">
       <v-flex xs12>
        <v-icon class="om-icon" color="#3949ab">book</v-icon>
@@ -73,6 +96,9 @@
     </v-flex>
     
   </v-layout>
+     </div>
+   </v-layout>
+  
  </v-container>
 </div>
 </template>
@@ -98,8 +124,12 @@ import toolbar from './../components/Toolbar.vue';
           {
             src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
           }
-        ]
+        ],
+        role:'',
       }
+    },
+    mounted(){
+       this.role = localStorage.role;
     }
   }
 </script>

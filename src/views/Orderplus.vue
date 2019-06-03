@@ -4,10 +4,10 @@
 <v-container >
 <v-layout row wrap>
     <v-flex xs6>
-        <p>Biswas sampad</p>
+        <p>{{this.name}}</p>
     </v-flex>
     <v-flex xs6>
-        <p>Table No 21</p>
+        <p>{{}}</p>
     </v-flex>
     <v-flex xs12>
         <p><b>Ordering :: Item Name</b></p>
@@ -26,6 +26,20 @@ import toolbar from './../components/Toolbar.vue'
 export default {
 components:{
     toolbar,
+},
+data(){
+    return{
+        name:'',
+        id:'',
+        menu:'',
+        category:'',
+    }
+},
+mounted(){
+
+},
+methods:{
+    
 }
 }
 </script>
