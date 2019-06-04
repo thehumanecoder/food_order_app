@@ -14,7 +14,9 @@ import confirm from './views/Confirm.vue'
 import takeorder from './views/Takeorder.vue'
 import bookingdetails from './views/BookingDetails.vue'
 import item from './views/Item.vue'
-
+import items from './views/Items.vue'
+import activeOrders from './views/ActiveOrders.vue'
+import bill from './views/Bill.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -93,6 +95,23 @@ export default new Router({
       path:'/item/:id',
       name:'Item',
       component:item,
+      props:true,
+    },
+    {
+      path:'/items/:id',
+      name:'Items',
+      component:items,
+      props:true,
+    },
+    {
+      path:'/printbill',
+      name:'PrintBill',
+      component:activeOrders,
+    },
+    {
+      path:'/bill/:id',
+      name:'Bill',
+      component:bill,
       props:true,
     }
   ]

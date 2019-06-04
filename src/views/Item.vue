@@ -6,7 +6,6 @@
             <v-flex xs12 sm6 offset-sm3>
       <v-card>
         <v-img
-          class="white--text"
           v-if="!image"
           height="200px"
           :src="require('../assets/no-preview.png')"
@@ -44,21 +43,32 @@
         </v-card-title>
         <v-card-actions>
             <v-layout row wrap clas="deni">
-            <v-flex xs4 class="modak">Add Order Amount</v-flex>
-            <v-flex xs3 class="modak ">
+              <v-flex xs4 class="modak" v-if="orderedAmount">Your current item  :</v-flex>
+            <v-flex xs4 class="modak" v-if="!orderedAmount">Add Order Amount</v-flex>
+            <v-flex xs3 class="modak " v-if="!orderedAmount">
                <input type="text" class="palu"  v-model="qnty" placeholder="0" @keyup="count()">
             </v-flex>
-            <v-flex xs4 class="modak" @click="addItem()">
+             <v-flex xs3 class="modak " v-if="orderedAmount" @click="changeOrder()">
+               {{orderedAmount}}
+            </v-flex>
+            <v-flex xs4 class="modak" @click="addItem()" v-if="prema==false">
                 <v-btn color="green" dark>Add To &nbsp;<i class="material-icons">
 playlist_add_check
 </i></v-btn>
+                </v-flex>      
+                
+            <v-flex xs4 class="modak" @click="addItem()" v-if="prema==true">
+              <span color="green"> <b> Item Added </b></span>
                 </v-flex>      
             </v-layout>
         </v-card-actions>
       </v-card>
     </v-flex>
-    <v-layout row wrap>
-      <v-flex></v-flex>
+    <v-layout row wrap >
+      <v-flex xs12 class="bravo" v-if="prema==true">
+        <v-btn  block color="yellow" :to="{name:'Items',params:{id:orderno}}">View Orders</v-btn>
+        <v-btn dark block color="green">Back To Menu</v-btn>
+      </v-flex>
 </v-layout>
         </v-layout>
     </v-container>
@@ -83,6 +93,8 @@ data(){
         qnty:'',
         amount:'',
         response:false,
+        prema:false,
+        orderedAmount : '',
     }
 },
 mounted(){
@@ -102,7 +114,15 @@ mounted(){
     axios.get('/api/getids/'+userId,{})
     .then((response)=>{
         this.orderno= response.data.orderno;
+         axios.get('/api/itemstatus/'+this.orderno +'/'+this.itemno,{})
+         .then((response)=>{
+           this.orderedAmount = response.data.itemqnty;
+         }).catch((error)=>{
+           console.log(error);
+         })
     })
+
+   
 },
 methods:{
     count(){
@@ -117,7 +137,10 @@ methods:{
             itemqnty:this.qnty,
             amount:this.amount,
         }).then((response)=>{
-            console.log(response.data);
+          console.log(response.data);
+            if(response.data == true){
+              this.prema = true;
+            }
         }).catch((error)=>{
             console.log(error);
         })
@@ -125,6 +148,9 @@ methods:{
         }else{
             alert('Enter a quantity to add to item to order');
         }
+        },
+        changeOrder(){
+          this.orderedAmount = false;
         }
 }
 }
@@ -141,5 +167,11 @@ methods:{
 }
 .deni{
     height:20px;
+}
+.bravo{
+  height:100px;
+  margin-top:10px;
+  border-radius:10px;
+  padding:10px;
 }
 </style>
